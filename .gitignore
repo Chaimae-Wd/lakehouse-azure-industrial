@@ -1,0 +1,17 @@
+# Secrets locaux
+.env
+
+# Données générées localement
+data/bronze/
+data/silver/
+data/gold/
+
+# Journaux et caches
+*.log
+__pycache__/
+.pytest_cache/
+
+# Spark
+.sparkStaging/
+metastore_db/
+derby.log

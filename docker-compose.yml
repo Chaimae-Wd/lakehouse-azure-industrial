@@ -59,5 +59,43 @@ services:
     profiles:
       - tools
 
+  spark-batch:
+    build:
+      context: .
+      dockerfile: docker/spark/Dockerfile
+
+    container_name: industrial_spark_batch
+
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: industrial_db
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin123
+      BRONZE_PATH: /opt/spark-data/bronze
+
+    volumes:
+      - ./spark:/opt/spark/work-dir/spark
+      - ./data:/opt/spark-data
+
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+    command:
+      - /opt/spark/bin/spark-submit
+      - --master
+      - local[*]
+      - --packages
+      - io.delta:delta-spark_2.12:3.3.2,org.postgresql:postgresql:42.7.5
+      - --conf
+      - spark.sql.extensions=io.delta.sql.DeltaSparkSessionExtension
+      - --conf
+      - spark.sql.catalog.spark_catalog=org.apache.spark.sql.delta.catalog.DeltaCatalog
+      - /opt/spark/work-dir/spark/jobs/ingest_postgres_bronze.py
+
+    profiles:
+      - batch
+
 volumes:
   postgres_data:
