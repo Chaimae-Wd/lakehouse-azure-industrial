@@ -77,6 +77,7 @@ services:
     volumes:
       - ./spark:/opt/spark/work-dir/spark
       - ./data:/opt/spark-data
+      - spark_ivy_cache:/home/spark/.ivy2
 
     depends_on:
       postgres:
@@ -97,5 +98,37 @@ services:
     profiles:
       - batch
 
+  spark-silver:
+    build:
+      context: .
+      dockerfile: docker/spark/Dockerfile
+
+    container_name: industrial_spark_silver
+
+    environment:
+      BRONZE_PATH: /opt/spark-data/bronze
+      SILVER_PATH: /opt/spark-data/silver
+
+    volumes:
+      - ./spark:/opt/spark/work-dir/spark
+      - ./data:/opt/spark-data
+      - spark_ivy_cache:/home/spark/.ivy2
+
+    command:
+      - /opt/spark/bin/spark-submit
+      - --master
+      - local[*]
+      - --packages
+      - io.delta:delta-spark_2.12:3.3.2
+      - --conf
+      - spark.sql.extensions=io.delta.sql.DeltaSparkSessionExtension
+      - --conf
+      - spark.sql.catalog.spark_catalog=org.apache.spark.sql.delta.catalog.DeltaCatalog
+      - /opt/spark/work-dir/spark/jobs/transform_bronze_silver.py
+
+    profiles:
+      - silver
+
 volumes:
   postgres_data:
+  spark_ivy_cache:
