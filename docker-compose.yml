@@ -280,6 +280,74 @@ services:
     profiles:
       - streaming
 
+  spark-streaming-silver:
+    build:
+      context: .
+      dockerfile: docker/spark/Dockerfile
+
+    container_name: industrial_spark_streaming_silver
+
+    environment:
+      STREAMING_BRONZE_PATH: >-
+        /opt/spark-data/bronze_streaming/sensor_readings
+      STREAMING_SILVER_PATH: >-
+        /opt/spark-data/silver_streaming/sensor_readings
+      STREAMING_SILVER_CHECKPOINT_PATH: >-
+        /opt/spark-data/checkpoints/kafka_sensor_silver
+
+    volumes:
+      - ./spark:/opt/spark/work-dir/spark
+      - ./data:/opt/spark-data
+      - spark_ivy_cache:/home/spark/.ivy2
+
+    command:
+      - /opt/spark/bin/spark-submit
+      - --master
+      - local[*]
+      - --packages
+      - io.delta:delta-spark_2.12:3.3.2
+      - --conf
+      - spark.sql.extensions=io.delta.sql.DeltaSparkSessionExtension
+      - --conf
+      - spark.sql.catalog.spark_catalog=org.apache.spark.sql.delta.catalog.DeltaCatalog
+      - /opt/spark/work-dir/spark/jobs/transform_streaming_bronze_silver.py
+
+    restart: unless-stopped
+
+    profiles:
+      - streaming
+
+  spark-validate-streaming:
+    build:
+      context: .
+      dockerfile: docker/spark/Dockerfile
+
+    container_name: industrial_spark_validate_streaming
+
+    environment:
+      STREAMING_BRONZE_PATH: >-
+        /opt/spark-data/bronze_streaming/sensor_readings
+
+    volumes:
+      - ./spark:/opt/spark/work-dir/spark
+      - ./data:/opt/spark-data
+      - spark_ivy_cache:/home/spark/.ivy2
+
+    command:
+      - /opt/spark/bin/spark-submit
+      - --master
+      - local[*]
+      - --packages
+      - io.delta:delta-spark_2.12:3.3.2
+      - --conf
+      - spark.sql.extensions=io.delta.sql.DeltaSparkSessionExtension
+      - --conf
+      - spark.sql.catalog.spark_catalog=org.apache.spark.sql.delta.catalog.DeltaCatalog
+      - /opt/spark/work-dir/spark/jobs/validate_streaming_bronze.py
+
+    profiles:
+      - streaming
+
 volumes:
   postgres_data:
   spark_ivy_cache:
