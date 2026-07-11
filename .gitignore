@@ -15,3 +15,6 @@ __pycache__/
 .sparkStaging/
 metastore_db/
 derby.log
+# Données streaming générées
+data/bronze_streaming/
+data/checkpoints/
