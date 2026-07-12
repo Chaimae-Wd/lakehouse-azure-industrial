@@ -107,6 +107,18 @@ with DAG(
         execution_timeout=timedelta(minutes=10),
     )
 
+
+    publish_gold = BashOperator(
+        task_id="publish_gold_to_postgres",
+        cwd=PROJECT_DIRECTORY,
+        bash_command=(
+            "docker compose --profile serving "
+            "run --rm spark-publish-gold"
+        ),
+        execution_timeout=timedelta(minutes=15),
+    )
+
+
     end = EmptyOperator(
         task_id="end",
     )
@@ -118,5 +130,6 @@ with DAG(
         >> silver_transformation
         >> gold_transformation
         >> validate_gold
+        >> publish_gold
         >> end
     )

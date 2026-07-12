@@ -378,6 +378,47 @@ services:
     profiles:
       - streaming
 
+
+  spark-publish-gold:
+    build:
+      context: .
+      dockerfile: docker/spark/Dockerfile
+
+    container_name: industrial_spark_publish_gold
+
+    environment:
+      GOLD_PATH: /opt/spark-data/gold
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: industrial_db
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin123
+      ANALYTICS_SCHEMA: analytics
+
+    volumes:
+      - ./spark:/opt/spark/work-dir/spark
+      - ./data:/opt/spark-data
+      - spark_ivy_cache:/home/spark/.ivy2
+
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+    command:
+      - /opt/spark/bin/spark-submit
+      - --master
+      - local[*]
+      - --packages
+      - io.delta:delta-spark_2.12:3.3.2,org.postgresql:postgresql:42.7.5
+      - --conf
+      - spark.sql.extensions=io.delta.sql.DeltaSparkSessionExtension
+      - --conf
+      - spark.sql.catalog.spark_catalog=org.apache.spark.sql.delta.catalog.DeltaCatalog
+      - /opt/spark/work-dir/spark/jobs/publish_gold_postgres.py
+
+    profiles:
+      - serving
+
 volumes:
   postgres_data:
   spark_ivy_cache:
