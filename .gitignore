@@ -21,3 +21,5 @@ data/checkpoints/
 data/silver_streaming/
 airflow/.env
 airflow/logs/
+# Fichier Power BI local
+*.pbix
