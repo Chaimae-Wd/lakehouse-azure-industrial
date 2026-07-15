@@ -1,0 +1,86 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Page-1" id="QV3JDotlZtC-gVj5aLok">
+    <mxGraphModel dx="774" dy="1620" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <UserObject label="" mermaidData="{&#xa;  &quot;data&quot;: &quot;flowchart LR\n\nDB[(\&quot;PostgreSQL&lt;br/&gt;Industrial Database\&quot;)]\nBR[\&quot;BRONZE&lt;br/&gt;&lt;br/&gt;Raw ingestion&lt;br/&gt;Schema preservation&lt;br/&gt;Ingestion metadata\&quot;]\nSI[\&quot;SILVER&lt;br/&gt;&lt;br/&gt;Data cleaning&lt;br/&gt;Validation&lt;br/&gt;Deduplication&lt;br/&gt;Business transformations\&quot;]\nGO[\&quot;GOLD&lt;br/&gt;&lt;br/&gt;Fact tables&lt;br/&gt;Dimensions&lt;br/&gt;KPIs&lt;br/&gt;Aggregations\&quot;]\nDQ{\&quot;DATA QUALITY&lt;br/&gt;&lt;br/&gt;Completeness&lt;br/&gt;Consistency&lt;br/&gt;Validity\&quot;}\nPBI[\&quot;POWER BI&lt;br/&gt;&lt;br/&gt;Semantic model&lt;br/&gt;Reports&lt;br/&gt;Dashboards\&quot;]\n\nDB --&gt;|\&quot;Extract\&quot;| BR\nBR --&gt;|\&quot;Transform\&quot;| SI\nSI --&gt;|\&quot;Aggregate\&quot;| GO\nGO --&gt;|\&quot;Validate\&quot;| DQ\nDQ --&gt;|\&quot;Publish\&quot;| PBI\n\nclassDef source fill:#D9EAF7,stroke:#4A90E2,stroke-width:2px,color:#1F2937;\nclassDef bronze fill:#A94F0A,stroke:#743405,stroke-width:2px,color:#FFFFFF;\nclassDef silver fill:#E6E6E6,stroke:#808080,stroke-width:2px,color:#1F2937;\nclassDef gold fill:#FFD966,stroke:#C9A000,stroke-width:2px,color:#1F2937;\nclassDef quality fill:#E8F5E9,stroke:#4F8A57,stroke-width:2px,color:#1F2937;\nclassDef analytics fill:#FFF2CC,stroke:#C9A227,stroke-width:2px,color:#1F2937;\n\nclass DB source;\nclass BR bronze;\nclass SI silver;\nclass GO gold;\nclass DQ quality;\nclass PBI analytics;\n\nlinkStyle default stroke:#4B5563,stroke-width:2px;&quot;,&#xa;  &quot;config&quot;: null&#xa;}" id="LdffLoUV11wYuMPvWr9g-1">
+          <mxCell connectable="0" parent="1" style="group;transparentBounds=1;editIcon=1;lockedGroup=0;groupPadding=10;" vertex="1">
+            <mxGeometry height="216" width="1420" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="PostgreSQL&#xa;Industrial Database" mermaidId="n:DB" mermaidBaseStyle="html=1;shape=cylinder3;boundedLbl=1;backgroundOutline=1;size=10;strokeWidth=2;whiteSpace=wrap;fillColor=#D9EAF7;strokeColor=#4A90E2;fontColor=#1F2937;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="PostgreSQL&#xa;Industrial Database" id="LdffLoUV11wYuMPvWr9g-2">
+          <mxCell parent="LdffLoUV11wYuMPvWr9g-1" style="html=1;shape=cylinder3;boundedLbl=1;backgroundOutline=1;size=10;strokeWidth=2;whiteSpace=wrap;fillColor=#D9EAF7;strokeColor=#4A90E2;fontColor=#1F2937;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="81" width="153" x="30" y="78" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="BRONZE&#xa;&#xa;Raw ingestion&#xa;Schema preservation&#xa;Ingestion metadata" mermaidId="n:BR" mermaidBaseStyle="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#A94F0A;strokeColor=#743405;fontColor=#FFFFFF;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="BRONZE&#xa;&#xa;Raw ingestion&#xa;Schema preservation&#xa;Ingestion metadata" id="LdffLoUV11wYuMPvWr9g-3">
+          <mxCell parent="LdffLoUV11wYuMPvWr9g-1" style="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#A94F0A;strokeColor=#743405;fontColor=#FFFFFF;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="131" width="209" x="285" y="53" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="SILVER&#xa;&#xa;Data cleaning&#xa;Validation&#xa;Deduplication&#xa;Business transformations" mermaidId="n:SI" mermaidBaseStyle="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#E6E6E6;strokeColor=#808080;fontColor=#1F2937;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="SILVER&#xa;&#xa;Data cleaning&#xa;Validation&#xa;Deduplication&#xa;Business transformations" id="LdffLoUV11wYuMPvWr9g-4">
+          <mxCell parent="LdffLoUV11wYuMPvWr9g-1" style="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#E6E6E6;strokeColor=#808080;fontColor=#1F2937;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="150" width="237" x="615" y="43" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="GOLD&#xa;&#xa;Fact tables&#xa;Dimensions&#xa;KPIs&#xa;Aggregations" mermaidId="n:GO" mermaidBaseStyle="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#FFD966;strokeColor=#C9A000;fontColor=#1F2937;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="GOLD&#xa;&#xa;Fact tables&#xa;Dimensions&#xa;KPIs&#xa;Aggregations" id="LdffLoUV11wYuMPvWr9g-5">
+          <mxCell parent="LdffLoUV11wYuMPvWr9g-1" style="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#FFD966;strokeColor=#C9A000;fontColor=#1F2937;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="150" width="152" x="974" y="43" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="DATA QUALITY&#xa;&#xa;Completeness&#xa;Consistency&#xa;Validity" mermaidId="n:DQ" mermaidBaseStyle="rhombus;html=1;strokeWidth=2;whiteSpace=wrap;fillColor=#E8F5E9;strokeColor=#4F8A57;fontColor=#1F2937;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="DATA QUALITY&#xa;&#xa;Completeness&#xa;Consistency&#xa;Validity" id="LdffLoUV11wYuMPvWr9g-6">
+          <mxCell parent="LdffLoUV11wYuMPvWr9g-1" style="rhombus;html=1;strokeWidth=2;whiteSpace=wrap;fillColor=#E8F5E9;strokeColor=#4F8A57;fontColor=#1F2937;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="176" width="190" x="1220" y="30" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="POWER BI&#xa;&#xa;Semantic model&#xa;Reports&#xa;Dashboards" mermaidId="n:PBI" mermaidBaseStyle="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#FFF2CC;strokeColor=#C9A227;fontColor=#1F2937;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="POWER BI&#xa;&#xa;Semantic model&#xa;Reports&#xa;Dashboards" id="LdffLoUV11wYuMPvWr9g-7">
+          <mxCell parent="LdffLoUV11wYuMPvWr9g-1" style="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#FFF2CC;strokeColor=#C9A227;fontColor=#1F2937;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="131" width="175" x="1511" y="53" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="Extract" mermaidId="e:DB-&gt;BR#0" mermaidBaseStyle="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=#4B5563;strokeWidth=2;html=1;fontSize=16;labelBackgroundColor=light-dark(#E8E8E88D,#2a2a2a8D);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);exitX=1;exitY=0.49;entryX=0;entryY=0.5;" mermaidBaseValue="Extract" id="LdffLoUV11wYuMPvWr9g-8">
+          <mxCell edge="1" parent="LdffLoUV11wYuMPvWr9g-1" source="LdffLoUV11wYuMPvWr9g-2" style="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=#4B5563;strokeWidth=2;html=1;fontSize=16;labelBackgroundColor=light-dark(#E8E8E88D,#2a2a2a8D);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);exitX=1;exitY=0.49;entryX=0;entryY=0.5;rounded=0;" target="LdffLoUV11wYuMPvWr9g-3">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points" />
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="Transform" mermaidId="e:BR-&gt;SI#0" mermaidBaseStyle="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=#4B5563;strokeWidth=2;html=1;fontSize=16;labelBackgroundColor=light-dark(#E8E8E88D,#2a2a2a8D);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);exitX=1;exitY=0.5;entryX=0;entryY=0.5;" mermaidBaseValue="Transform" id="LdffLoUV11wYuMPvWr9g-9">
+          <mxCell edge="1" parent="LdffLoUV11wYuMPvWr9g-1" source="LdffLoUV11wYuMPvWr9g-3" style="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=#4B5563;strokeWidth=2;html=1;fontSize=16;labelBackgroundColor=light-dark(#E8E8E88D,#2a2a2a8D);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);exitX=1;exitY=0.5;entryX=0;entryY=0.5;rounded=0;" target="LdffLoUV11wYuMPvWr9g-4">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points" />
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="Aggregate" mermaidId="e:SI-&gt;GO#0" mermaidBaseStyle="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=#4B5563;strokeWidth=2;html=1;fontSize=16;labelBackgroundColor=light-dark(#E8E8E88D,#2a2a2a8D);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);exitX=1;exitY=0.5;entryX=0;entryY=0.5;" mermaidBaseValue="Aggregate" id="LdffLoUV11wYuMPvWr9g-10">
+          <mxCell edge="1" parent="LdffLoUV11wYuMPvWr9g-1" source="LdffLoUV11wYuMPvWr9g-4" style="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=#4B5563;strokeWidth=2;html=1;fontSize=16;labelBackgroundColor=light-dark(#E8E8E88D,#2a2a2a8D);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);exitX=1;exitY=0.5;entryX=0;entryY=0.5;rounded=0;" target="LdffLoUV11wYuMPvWr9g-5">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points" />
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="Validate" mermaidId="e:GO-&gt;DQ#0" mermaidBaseStyle="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=#4B5563;strokeWidth=2;html=1;fontSize=16;labelBackgroundColor=light-dark(#E8E8E88D,#2a2a2a8D);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);exitX=1;exitY=0.5;entryX=0;entryY=0.5;" mermaidBaseValue="Validate" id="LdffLoUV11wYuMPvWr9g-11">
+          <mxCell edge="1" parent="LdffLoUV11wYuMPvWr9g-1" source="LdffLoUV11wYuMPvWr9g-5" style="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=#4B5563;strokeWidth=2;html=1;fontSize=16;labelBackgroundColor=light-dark(#E8E8E88D,#2a2a2a8D);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);exitX=1;exitY=0.5;entryX=0;entryY=0.5;rounded=0;" target="LdffLoUV11wYuMPvWr9g-6">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points" />
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="Publish" mermaidId="e:DQ-&gt;PBI#0" mermaidBaseStyle="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=#4B5563;strokeWidth=2;html=1;fontSize=16;labelBackgroundColor=light-dark(#E8E8E88D,#2a2a2a8D);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);exitX=1;exitY=0.5;entryX=0;entryY=0.5;" mermaidBaseValue="Publish" id="LdffLoUV11wYuMPvWr9g-12">
+          <mxCell edge="1" parent="LdffLoUV11wYuMPvWr9g-1" source="LdffLoUV11wYuMPvWr9g-6" style="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=#4B5563;strokeWidth=2;html=1;fontSize=16;labelBackgroundColor=light-dark(#E8E8E88D,#2a2a2a8D);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);exitX=1;exitY=0.5;entryX=0;entryY=0.5;rounded=0;" target="LdffLoUV11wYuMPvWr9g-7">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points" />
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <mxCell id="LdffLoUV11wYuMPvWr9g-13" parent="LdffLoUV11wYuMPvWr9g-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;font style=&quot;font-size: 24px;&quot; face=&quot;Arial&quot;&gt;&lt;b&gt;Industrial Batch Data Pipeline&lt;/b&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="30" width="370" x="710" y="-20" as="geometry" />
+        </mxCell>
+        <mxCell id="LdffLoUV11wYuMPvWr9g-14" parent="LdffLoUV11wYuMPvWr9g-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;font style=&quot;font-size: 14px; color: rgb(77, 77, 77);&quot;&gt;PostgreSQL to Power BI — Bronze, Silver and Gold Processing&lt;/font&gt;" vertex="1">
+          <mxGeometry height="30" width="300" x="740" y="10" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
