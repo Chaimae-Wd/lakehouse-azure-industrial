@@ -1,122 +1,178 @@
-# Industrial Lakehouse on Microsoft Azure
+# 🏭 Industrial Lakehouse Platform
 
-## Industrial Data Platform using PostgreSQL, Apache Spark, Kafka, Airflow and Power BI
+> Modern Industrial Lakehouse Architecture using PostgreSQL, Apache Spark, Apache Kafka, Apache Airflow and Power BI.
 
----
-
-## Project Overview
-
-This project implements a complete Industrial Lakehouse architecture inspired by modern Microsoft Azure Data Engineering solutions.
-
-The platform centralizes industrial production data, maintenance records, sensor measurements and alerts into a multi-layer Lakehouse architecture (Bronze, Silver and Gold).
-
-The objective is to build an end-to-end Data Engineering pipeline capable of:
-
-- Collecting industrial data
-- Processing batch and streaming data
-- Building analytical datasets
-- Orchestrating pipelines
-- Producing Business Intelligence dashboards
+![Architecture](docs/diagrams/01_global_architecture.drawio.png)
 
 ---
 
-## Architecture
+# 📌 Project Overview
 
-Bronze Layer
-↓
+This project implements a complete Industrial Lakehouse platform capable of processing both batch and real-time industrial data.
 
-Silver Layer
-↓
+The platform simulates an industrial production environment where production, maintenance and sensor data are collected, processed and transformed into analytics-ready datasets.
 
-Gold Layer
-↓
+The architecture follows the Medallion Architecture:
 
-Power BI
+- Bronze Layer
+- Silver Layer
+- Gold Layer
 
----
+and includes:
 
-## Main Features
-
-✔ PostgreSQL industrial database
-
-✔ Synthetic industrial data generation
-
-✔ Apache Spark Batch Processing
-
-✔ Apache Spark Structured Streaming
-
-✔ Kafka Streaming Pipeline
-
-✔ Bronze / Silver / Gold Lakehouse
-
-✔ Airflow Orchestration
-
-✔ Power BI Dashboards
-
-✔ Production Analytics
-
-✔ Maintenance Analytics
-
-✔ Alerts Monitoring
-
----
-
-## Technologies
-
-- Python
 - PostgreSQL
 - Apache Spark
-- Delta Lake
 - Apache Kafka
 - Apache Airflow
-- Docker
 - Power BI
-- Git
-- VS Code
 
 ---
 
-## Project Structure
+# 🏗 Architecture
+
+```
+Industrial Sources
+        │
+        ▼
+ PostgreSQL Database
+        │
+ ┌───────────────┐
+ │               │
+ ▼               ▼
+Batch        Streaming
+Spark          Kafka
+ │               │
+ └───────┬───────┘
+         ▼
+      Bronze
+         ▼
+      Silver
+         ▼
+       Gold
+         ▼
+    Airflow DAG
+         ▼
+      Power BI
+```
+
+---
+
+# 📂 Project Structure
 
 ```
 lakehouse-azure-industrial/
-│
+
 ├── airflow/
-├── config/
-├── data/
-│   ├── bronze/
-│   ├── silver/
-│   ├── gold/
-│
 ├── docker/
+├── docs/
 ├── kafka/
 ├── postgres/
 ├── spark/
-│
-├── docs/
 ├── scripts/
+├── sql/
 ├── tests/
-│
+├── data/
 └── README.md
 ```
 
 ---
 
-## Data Pipeline
+# ⚙ Technologies
 
-PostgreSQL
+- Python
+- Apache Spark
+- Delta Lake
+- PostgreSQL
+- Apache Kafka
+- Apache Airflow
+- Docker
+- Power BI
+
+---
+
+# 🥉 Bronze Layer
+
+The Bronze layer stores raw industrial datasets exactly as they are received.
+
+Features:
+
+- Raw ingestion
+- Historical storage
+- Metadata tracking
+- Batch ingestion
+- Streaming ingestion
+
+---
+
+# 🥈 Silver Layer
+
+The Silver layer prepares clean datasets.
+
+Processing includes:
+
+- Cleaning
+- Deduplication
+- Validation
+- Business rules
+- Standardization
+
+---
+
+# 🥇 Gold Layer
+
+The Gold layer contains business-ready analytics.
+
+Generated datasets include:
+
+- Fact tables
+- Dimension tables
+- KPIs
+- Aggregations
+- Analytics datasets
+
+---
+
+# 🔄 Batch Pipeline
+
+![Batch Pipeline](docs/diagrams/03_batch_pipeline.drawio.png)
+
+Steps:
+
+1. Extract PostgreSQL
+2. Bronze ingestion
+3. Silver transformation
+4. Gold aggregation
+5. Data validation
+
+---
+
+# ⚡ Streaming Pipeline
+
+![Streaming Pipeline](docs/diagrams/04_streaming_pipeline.drawio.png)
+
+Pipeline:
+
+Industrial Sensors
 
 ↓
 
-Spark Bronze
+Kafka Producer
 
 ↓
 
-Spark Silver
+Kafka Topic
 
 ↓
 
-Spark Gold
+Spark Structured Streaming
+
+↓
+
+Bronze Streaming
+
+↓
+
+Validation
 
 ↓
 
@@ -124,21 +180,90 @@ Power BI
 
 ---
 
-## Dashboards
+# 🎯 Airflow Orchestration
 
-- Executive Dashboard
-- Production Analytics
-- Maintenance Dashboard
-- Alerts Dashboard
+![Airflow](docs/diagrams/05_airflow_pipeline.drawio.png)
+
+The complete Batch pipeline is orchestrated using Apache Airflow.
+
+The DAG automatically executes:
+
+- Bronze ingestion
+- Silver transformation
+- Gold aggregation
+- Data validation
 
 ---
 
-## Author
+# 📊 Power BI Dashboards
 
-Chaimae El Widadi
+## Executive Dashboard
+
+![Executive](docs/screenshots/executive_dashboard.png)
+
+---
+
+## Production Dashboard
+
+![Production](docs/screenshots/production_dashboard.png)
+
+---
+
+## Maintenance Dashboard
+
+![Maintenance](docs/screenshots/maintenance_dashboard.png)
+
+---
+
+## Alerts Dashboard
+
+![Alerts](docs/screenshots/alerts_dashboard.png)
+
+---
+
+# 🚀 Features
+
+✔ Batch Processing
+
+✔ Real-Time Streaming
+
+✔ Medallion Architecture
+
+✔ Data Quality Validation
+
+✔ Automated Airflow Pipelines
+
+✔ Power BI Dashboards
+
+✔ Dockerized Infrastructure
+
+✔ Kafka Streaming
+
+✔ Spark Analytics
+
+---
+
+# 📈 Results
+
+The project successfully processes:
+
+- 20 000 Production Records
+- 2 000 Maintenance Records
+- 5 000 Alerts
+- 150 Sensors
+- 50 Machines
+- 20 Technicians
+
+---
+
+# 👩 Author
+
+**Chaimae El Widadi**
 
 Engineering Student
 
-Data Engineering
+Management & Information Systems Engineering
 
 ENSA Khouribga
+
+Morocco
