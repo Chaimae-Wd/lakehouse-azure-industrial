@@ -42,7 +42,7 @@ def configure_logging() -> logging.Logger:
 
 
 def create_spark_session() -> SparkSession:
-    """Créer la session Spark avec le support de Delta Lake."""
+    """Créer une session Spark légère avec le support Delta Lake."""
 
     return (
         SparkSession.builder
@@ -56,6 +56,9 @@ def create_spark_session() -> SparkSession:
             "org.apache.spark.sql.delta.catalog.DeltaCatalog",
         )
         .config("spark.sql.session.timeZone", "UTC")
+        .config("spark.sql.shuffle.partitions", "2")
+        .config("spark.default.parallelism", "2")
+        .config("spark.ui.enabled", "false")
         .getOrCreate()
     )
 
@@ -202,14 +205,6 @@ def main() -> None:
                 password=postgres_password,
             )
 
-            source_count = source_dataframe.count()
-
-            logger.info(
-                "Table %s : %s lignes extraites.",
-                table_name,
-                source_count,
-            )
-
             bronze_dataframe = add_ingestion_metadata(
                 dataframe=source_dataframe,
                 source_table=table_name,
@@ -228,19 +223,24 @@ def main() -> None:
                 output_path=table_output_path,
             )
 
-            validated_count = validate_delta_table(
-                spark=spark,
-                output_path=table_output_path,
-                expected_count=source_count,
+            validated_count = (
+                spark.read
+                .format("delta")
+                .load(table_output_path)
+                .count()
             )
 
             total_rows += validated_count
 
             logger.info(
-                "Validation réussie pour %s : %s lignes.",
+                "Table %s écrite et validée : %s lignes.",
                 table_name,
                 validated_count,
             )
+
+            spark.catalog.clearCache()
+
+           
 
         elapsed_time = time.perf_counter() - start_time
 

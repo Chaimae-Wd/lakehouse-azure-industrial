@@ -18,7 +18,9 @@ services:
       - ./postgres/init:/docker-entrypoint-initdb.d
 
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U admin -d industrial_db" ]
+      test:
+        - CMD-SHELL
+        - pg_isready -U admin -d industrial_db
       interval: 5s
       timeout: 5s
       retries: 10
@@ -36,7 +38,8 @@ services:
       - "5050:80"
 
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
 
   data-generator:
     build:
@@ -75,8 +78,8 @@ services:
       BRONZE_PATH: /opt/spark-data/bronze
 
     volumes:
-      - ./spark:/opt/spark/work-dir/spark
-      - ./data:/opt/spark-data
+      - ${PROJECT_HOST_PATH}/spark:/opt/spark/work-dir/spark
+      - ${PROJECT_HOST_PATH}/data:/opt/spark-data
       - spark_ivy_cache:/home/spark/.ivy2
 
     depends_on:
@@ -86,7 +89,15 @@ services:
     command:
       - /opt/spark/bin/spark-submit
       - --master
-      - local[*]
+      - local[1]
+      - --driver-memory
+      - 768m
+      - --conf
+      - spark.sql.shuffle.partitions=1
+      - --conf
+      - spark.default.parallelism=1
+      - --conf
+      - spark.ui.enabled=false
       - --packages
       - io.delta:delta-spark_2.12:3.3.2,org.postgresql:postgresql:42.7.5
       - --conf
@@ -110,8 +121,8 @@ services:
       SILVER_PATH: /opt/spark-data/silver
 
     volumes:
-      - ./spark:/opt/spark/work-dir/spark
-      - ./data:/opt/spark-data
+      - ${PROJECT_HOST_PATH}/spark:/opt/spark/work-dir/spark
+      - ${PROJECT_HOST_PATH}/data:/opt/spark-data
       - spark_ivy_cache:/home/spark/.ivy2
 
     command:
@@ -141,8 +152,8 @@ services:
       GOLD_PATH: /opt/spark-data/gold
 
     volumes:
-      - ./spark:/opt/spark/work-dir/spark
-      - ./data:/opt/spark-data
+      - ${PROJECT_HOST_PATH}/spark:/opt/spark/work-dir/spark
+      - ${PROJECT_HOST_PATH}/data:/opt/spark-data
       - spark_ivy_cache:/home/spark/.ivy2
 
     command:
@@ -171,8 +182,8 @@ services:
       GOLD_PATH: /opt/spark-data/gold
 
     volumes:
-      - ./spark:/opt/spark/work-dir/spark
-      - ./data:/opt/spark-data
+      - ${PROJECT_HOST_PATH}/spark:/opt/spark/work-dir/spark
+      - ${PROJECT_HOST_PATH}/data:/opt/spark-data
       - spark_ivy_cache:/home/spark/.ivy2
 
     command:
@@ -200,17 +211,12 @@ services:
       - "29092:29092"
 
     environment:
-      # Identité du nœud Kafka
       KAFKA_NODE_ID: 1
-
-      # Mode KRaft : ce nœud est broker et contrôleur
       KAFKA_PROCESS_ROLES: broker,controller
 
-      # Listeners disponibles dans le conteneur
       KAFKA_LISTENERS: >-
         PLAINTEXT://0.0.0.0:9092, CONTROLLER://0.0.0.0:9093, PLAINTEXT_HOST://0.0.0.0:29092
 
-      # Adresse utilisée par les autres conteneurs et par Windows
       KAFKA_ADVERTISED_LISTENERS: >-
         PLAINTEXT://kafka:9092, PLAINTEXT_HOST://localhost:29092
 
@@ -219,25 +225,23 @@ services:
 
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
-
-      # Configuration du contrôleur KRaft
       KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka:9093
 
-      # Configuration adaptée à un cluster local à un seul nœud
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
       KAFKA_NUM_PARTITIONS: 3
 
-      # Identifiant stable du cluster local
       CLUSTER_ID: MkU3OEVBNTcwNTJENDM2Qk
 
     volumes:
       - kafka_data:/var/lib/kafka/data
 
     healthcheck:
-      test: [ "CMD-SHELL", "/opt/kafka/bin/kafka-topics.sh --bootstrap-server localhost:9092 --list >/dev/null 2>&1" ]
+      test:
+        - CMD-SHELL
+        - /opt/kafka/bin/kafka-topics.sh --bootstrap-server localhost:9092 --list >/dev/null 2>&1
       interval: 10s
       timeout: 10s
       retries: 12
@@ -283,8 +287,8 @@ services:
         /opt/spark-data/checkpoints/kafka_sensor_bronze
 
     volumes:
-      - ./spark:/opt/spark/work-dir/spark
-      - ./data:/opt/spark-data
+      - ${PROJECT_HOST_PATH}/spark:/opt/spark/work-dir/spark
+      - ${PROJECT_HOST_PATH}/data:/opt/spark-data
       - spark_ivy_cache:/home/spark/.ivy2
 
     depends_on:
@@ -326,8 +330,8 @@ services:
         /opt/spark-data/checkpoints/kafka_sensor_silver
 
     volumes:
-      - ./spark:/opt/spark/work-dir/spark
-      - ./data:/opt/spark-data
+      - ${PROJECT_HOST_PATH}/spark:/opt/spark/work-dir/spark
+      - ${PROJECT_HOST_PATH}/data:/opt/spark-data
       - spark_ivy_cache:/home/spark/.ivy2
 
     command:
@@ -359,8 +363,8 @@ services:
         /opt/spark-data/bronze_streaming/sensor_readings
 
     volumes:
-      - ./spark:/opt/spark/work-dir/spark
-      - ./data:/opt/spark-data
+      - ${PROJECT_HOST_PATH}/spark:/opt/spark/work-dir/spark
+      - ${PROJECT_HOST_PATH}/data:/opt/spark-data
       - spark_ivy_cache:/home/spark/.ivy2
 
     command:
@@ -377,7 +381,6 @@ services:
 
     profiles:
       - streaming
-
 
   spark-publish-gold:
     build:
@@ -396,8 +399,8 @@ services:
       ANALYTICS_SCHEMA: analytics
 
     volumes:
-      - ./spark:/opt/spark/work-dir/spark
-      - ./data:/opt/spark-data
+      - ${PROJECT_HOST_PATH}/spark:/opt/spark/work-dir/spark
+      - ${PROJECT_HOST_PATH}/data:/opt/spark-data
       - spark_ivy_cache:/home/spark/.ivy2
 
     depends_on:
